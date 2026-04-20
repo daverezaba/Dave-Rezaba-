@@ -1,1 +1,173 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Portfolio</title>
+    <style>
+        :root {
+            --primary-bg: #f4f7f6;
+            --card-bg: #ffffff;
+            --accent-color: #3498db;
+            --text-color: #333;
+            --secondary-text: #666;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: var(--primary-bg);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .profile-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--card-bg);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        section {
+            background: var(--card-bg);
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        h2 {
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--primary-bg);
+            padding-bottom: 10px;
+        }
+
+        .about-text {
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--secondary-text);
+        }
+
+        .project-img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        figcaption {
+            text-align: center;
+            font-style: italic;
+            color: var(--secondary-text);
+            font-size: 0.9rem;
+            margin-top: -10px;
+            margin-bottom: 20px;
+        }
+
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--accent-color);
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: transform 0.2s, background 0.2s;
+            font-weight: bold;
+            width: 80%;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .cat-section {
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .cat-img {
+            max-width: 300px;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <img src="https://daverezaba123-qghmk.wordpress.com/wp-content/uploads/2025/10/image_editor_output_image-2114367514-17610313795633610151855319212430.jpg?w=585" alt="Profile" class="profile-img">
+            <h1>ABOUT ME</h1>
+            <p class="about-text">
+                Motivated and results-driven Information Technology student with a strong foundational understanding of networking principles, operating systems (Windows/Linux), and hardware configuration. Eager to leverage classroom knowledge and practical project experience to contribute to a dynamic IT environment. Seeking an opportunity to develop hands-on skills in system administration and technical support.
+            </p>
+        </header>
+
+        <section>
+            <h2>SKILLS & CERTIFICATIONS</h2>
+            <figure>
+                <img src="https://daverezaba123-qghmk.wordpress.com/wp-content/uploads/2026/04/messenger_creation_b6abe9f4-d497-465a-8bca-718abc1be0e85320346413832331087.jpeg?w=1024" alt="Cisco Certificate" class="project-img">
+                <figcaption>Certificate for completing the Digital Safety and Security Awareness course by Cisco Networking Academy.</figcaption>
+            </figure>
+        </section>
+
+        <section>
+            <h2>PROJECTS & MULTIMEDIA</h2>
+            
+            <img src="https://daverezaba123-qghmk.wordpress.com/wp-content/uploads/2025/10/img_20250904_1341521781745091978611341.jpg?w=1024" alt="Design Layout" class="project-img">
+            <img src="https://daverezaba123-qghmk.wordpress.com/wp-content/uploads/2025/10/img_20250924_1507045839965630756369857.jpg?w=1024" alt="T-Shirt Design" class="project-img">
+            <p>T-shirt Layout and YouTube Template Design for Multi Media Systems. Inspired by BSAB colors for an IT Department aesthetic.</p>
+
+            <img src="https://daverezaba123-qghmk.wordpress.com/wp-content/uploads/2025/10/img_20250910_1442366977657314798524633.jpg?w=771" alt="Product Output" class="project-img">
+            <p>Product output for Multimedia subject: created using Adobe Photoshop followed by physical product assembly.</p>
+
+            <img src="https://daverezaba123-qghmk.wordpress.com/wp-content/uploads/2025/10/img_20251014_1134147351683056492932065.jpg?w=1024" alt="PHP Practice" class="project-img">
+            <p>PHP code practice demonstrating real-time database connection and display using phpMyAdmin.</p>
+
+            <img src="https://daverezaba123-qghmk.wordpress.com/wp-content/uploads/2025/10/image_editor_output_image1780041489-17610293932032936794629853507599.jpg?w=539" alt="HTML Project" class="project-img">
+            <p>HTML Project output featuring navigation links to various sample works.</p>
+        </section>
+
+        <section>
+            <h2>INTERACTIVE DESIGNS</h2>
+            <div class="links-container">
+                <a href="https://www.canva.com/design/DAGvdbovqI4/u73NBZSDJmGhv8i1Y7YoFw/edit?utm_content=DAGvdbovqI4&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" class="btn" target="_blank">PORTFOLIO IN CANVA</a>
+                <a href="https://www.figma.com/design/pBy0n4gk14CFfs5cXbxADL/Untitled?node-id=0-1&t=ANla11ipNHuYHCc1-1" class="btn" target="_blank">E-COMMERCE IN FIGMA</a>
+                <a href="https://www.figma.com/proto/eAmQpeF1KxF3NUIVF04yJP/Untitled?node-id=2-32&starting-point-node-id=2%3A26&t=cmKT7jcunyEAsmPc-1" class="btn" target="_blank">PORTFOLIO IN FIGMA</a>
+            </div>
+        </section>
+
+        <section class="cat-section">
+            <img src="https://daverezaba123-qghmk.wordpress.com/wp-content/uploads/2025/10/fb_img_16467307966414342928367721801311417410.jpg?w=576" alt="Lemon the Cat" class="cat-img">
+            <p>And of course, my cat Lemon! 🍋</p>
+        </section>
+    </div>
+
+</body>
+</html>
