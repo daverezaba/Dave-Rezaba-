@@ -3,370 +3,580 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anthony Espinosa | Portfolio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Portfolio website</title>
     <style>
-        /* --- DESIGN TOKENS & RESET --- */
         :root {
-            --bg-dark: #121212;
-            --bg-card: #1e1e1e;
-            --text-main: #ffffff;
-            --text-dim: #b0b0b0;
-            --accent: #e0e0e0;
-            --border: #333333;
+            /* New Color Palette: Black, Red, White */
+            --bg-dark: #0a0a0a;
+            --accent-red: #e11d48;
+            --deep-red: #9f1239;
+            --pure-white: #ffffff;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --card-bg: rgba(20, 20, 20, 0.85); /* Dark translucent cards */
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            scroll-behavior: smooth;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--bg-dark);
+            background: var(--bg-dark);
             color: var(--text-main);
+            overflow-x: hidden;
             line-height: 1.6;
         }
 
-        /* --- HEADER & NAVIGATION --- */
-        header {
-            text-align: center;
-            padding: 60px 20px;
-            background: linear-gradient(to bottom, #000, var(--bg-dark));
-        }
-
-        .main-title {
-            font-size: 3rem;
-            font-weight: 900;
-            letter-spacing: -1px;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-        }
-
-        nav {
-            position: sticky;
+        /* Live Wallpaper: 50% Red and 50% Black Mesh */
+        .live-bg {
+            position: fixed;
             top: 0;
-            background: rgba(18, 18, 18, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border);
-            z-index: 1000;
-            display: flex;
-            justify-content: center;
-            padding: 15px;
-            gap: 20px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #000000 0%, #000000 45%, #7f1d1d 55%, #e11d48 100%);
+            background-size: 400% 400%;
+            animation: meshMove 10s ease-in-out infinite;
         }
 
-        nav a {
-            color: var(--text-dim);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            transition: 0.3s;
+        @keyframes meshMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        nav a:hover {
-            color: var(--text-main);
+        /* Subtle Dark Grid instead of white particles */
+        .live-bg::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(circle, rgba(255, 0, 0, 0.1) 1px, transparent 1px);
+            background-size: 30px 30px;
         }
 
-        /* --- BUTTONS --- */
-        .btn-cv {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 12px 25px;
-            background-color: var(--text-main);
-            color: var(--bg-dark);
-            text-decoration: none;
-            font-weight: bold;
-            border-radius: 5px;
-            transition: transform 0.2s, background-color 0.2s;
-        }
-
-        .btn-cv:hover {
-            background-color: var(--text-dim);
-            transform: translateY(-2px);
-        }
-
-        /* --- SECTIONS --- */
-        section {
+        .container {
             max-width: 1000px;
             margin: 0 auto;
-            padding: 80px 20px;
-        }
-
-        h2 {
-            font-size: 2rem;
-            border-left: 4px solid var(--accent);
-            padding-left: 15px;
-            margin-bottom: 40px;
-            text-transform: uppercase;
-        }
-
-        /* --- GRID LAYOUTS --- */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            overflow: hidden;
-            transition: 0.3s;
-        }
-
-        .card:hover {
-            border-color: var(--text-dim);
-        }
-
-        .card img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            filter: grayscale(100%);
-            transition: 0.5s;
-        }
-
-        .card:hover img {
-            filter: grayscale(0%);
-        }
-
-        .card-content {
             padding: 20px;
         }
 
-        /* --- CHATBOT UI --- */
-        #chat-widget {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 300px;
-            height: 400px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 15px;
-            display: none;
-            flex-direction: column;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            z-index: 2000;
+        /* Header Area */
+        header {
+            text-align: center;
+            padding: 70px 20px 30px;
         }
 
-        #chat-header {
-            padding: 15px;
-            background: var(--border);
-            border-radius: 15px 15px 0 0;
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid var(--accent-red);
+            object-fit: cover;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(225, 29, 72, 0.3);
+            transition: var(--transition);
+        }
+
+        .profile-pic:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(225, 29, 72, 0.5);
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            color: var(--pure-white);
+            letter-spacing: -0.5px;
+            margin-bottom: 5px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        header p {
+            color: var(--accent-red);
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 45px;
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+        }
+
+        .tab-btn {
+            background: rgba(15, 15, 15, 0.8);
+            border: 1px solid #333;
+            color: var(--pure-white);
+            padding: 12px 26px;
+            border-radius: 14px;
+            cursor: pointer;
+            backdrop-filter: blur(15px);
+            transition: var(--transition);
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .tab-btn:hover, .tab-btn.active {
+            background: var(--accent-red);
+            color: white;
+            box-shadow: 0 8px 20px rgba(225, 29, 72, 0.4);
+            transform: translateY(-2px);
+            border-color: var(--accent-red);
+        }
+
+        /* Content Sections */
+        .content-section {
+            display: none;
+            animation: fadeInSlide 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeInSlide {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            backdrop-filter: blur(12px);
+        }
+
+        h2, h3 {
+            color: var(--accent-red);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .info-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .info-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #333;
+            color: var(--text-main);
+        }
+
+        .info-list strong { color: var(--accent-red); }
+
+        img {
+            max-width: 100%;
+            border-radius: 16px;
+            margin: 15px 0;
+            border: 2px solid #333;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        /* Links */
+        .link-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background: transparent;
+            color: var(--accent-red);
+            border: 2px solid var(--accent-red);
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 700;
+            margin: 10px 10px 10px 0;
+            transition: var(--transition);
+        }
+
+        .link-button:hover {
+            background: var(--accent-red);
+            color: white;
+            box-shadow: 0 10px 20px rgba(225, 29, 72, 0.3);
+        }
+
+        /* AI Assistant Widget */
+        #ai-widget {
+            position: fixed;
+            bottom: 100px;
+            right: 25px;
+            width: 340px;
+            background: #111;
+            border-radius: 20px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.5);
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
+            overflow: hidden;
+            border: 1px solid var(--accent-red);
+        }
+
+        #ai-header {
+            background: var(--accent-red);
+            color: white;
+            padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            font-weight: 700;
         }
 
-        #chat-messages {
-            flex: 1;
-            padding: 15px;
+        #ai-body {
+            height: 320px;
             overflow-y: auto;
-            font-size: 0.85rem;
+            padding: 20px;
+            font-size: 0.95rem;
+            background: #0a0a0a;
+            color: #eee;
         }
 
-        .msg { margin-bottom: 10px; padding: 8px; border-radius: 5px; }
-        .bot { background: var(--border); color: var(--text-main); text-align: left; }
-        .user { background: var(--text-main); color: var(--bg-dark); text-align: right; }
-
-        #chat-input-area {
+        #ai-input-area {
             display: flex;
-            padding: 10px;
-            border-top: 1px solid var(--border);
+            padding: 15px;
+            border-top: 1px solid #222;
+            gap: 10px;
         }
 
-        #chat-input {
+        #ai-input {
             flex: 1;
-            background: transparent;
-            border: none;
+            padding: 10px 15px;
+            background: #1a1a1a;
+            border: 1px solid #333;
             color: white;
+            border-radius: 10px;
             outline: none;
         }
 
-        #chat-trigger {
+        #ai-input:focus { border-color: var(--accent-red); }
+
+        #ai-send {
+            background: var(--accent-red);
+            color: white;
+            border: none;
+            padding: 0 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .ai-toggle {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--text-main);
-            color: var(--bg-dark);
+            bottom: 25px;
+            right: 25px;
             width: 60px;
             height: 60px;
+            background: var(--accent-red);
+            color: white;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            z-index: 1999;
+            box-shadow: 0 8px 25px rgba(225, 29, 72, 0.4);
+            z-index: 999;
+            transition: var(--transition);
+            font-size: 24px;
         }
 
-        /* --- CONTACT --- */
-        .contact-info {
-            text-align: center;
-            font-size: 1.2rem;
-            color: var(--text-dim);
+        .ai-toggle:hover { transform: scale(1.1) rotate(5deg); }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 2px solid #333;
         }
 
-        /* --- RESPONSIVE --- */
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+        }
+
         @media (max-width: 600px) {
-            .main-title { font-size: 2rem; }
-            nav { gap: 10px; flex-wrap: wrap; }
-            nav a { font-size: 0.7rem; }
+            h1 { font-size: 2.2rem; }
+            .nav-tabs { flex-wrap: wrap; }
+            #ai-widget { width: 90%; right: 5%; }
+        }
+
+        /* --- NEW FEEDBACK STYLES --- */
+        .feedback-toggle {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            width: 60px;
+            height: 60px;
+            background: #222;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            z-index: 999;
+            transition: var(--transition);
+            font-size: 24px;
+            border: 1px solid #444;
+        }
+
+        .feedback-toggle:hover { 
+            background: var(--accent-red); 
+            transform: scale(1.1);
+        }
+
+        #feedback-modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .feedback-card {
+            background: #111;
+            width: 90%;
+            max-width: 400px;
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid var(--accent-red);
+            position: relative;
+        }
+
+        .feedback-card h2 { margin-top: 0; }
+
+        .feedback-input {
+            width: 100%;
+            padding: 12px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 10px;
+            color: white;
+            margin-bottom: 15px;
+            outline: none;
+        }
+
+        .feedback-input:focus { border-color: var(--accent-red); }
+
+        .feedback-submit {
+            width: 100%;
+            padding: 12px;
+            background: var(--accent-red);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .feedback-submit:hover { opacity: 0.9; transform: translateY(-2px); }
+
+        .close-feedback {
+            position: absolute;
+            top: 15px; right: 15px;
+            color: #666;
+            cursor: pointer;
+            font-size: 20px;
         }
     </style>
 </head>
 <body>
 
+<div class="live-bg"></div>
+
+<div class="container">
     <header>
-        <h1 class="main-title">ANTHONY ESPINOSA</h1>
-        <p style="color: var(--text-dim);">Aspiring IT Professional | Systems & Design</p>
-        <a href="#" class="btn-cv" onclick="downloadCV()">
-            <i class="fas fa-download"></i> DOWNLOAD CV
-        </a>
+        <img src="https://daverezaba123-qghmk.wordpress.com/wp-content/uploads/2025/10/image_editor_output_image-2114367514-17610313795633610151855319212430.jpg?w=585" class="profile-pic" alt="Dave Rezaba">
+        <h1>DAVE REZABA</h1>
+        <p>IT Professional | 25 Years Old</p>
     </header>
 
-    <nav>
-        <a href="#about">About Me</a>
-        <a href="#skills">Skills</a>
-        <a href="#certificates">Certificates</a>
-        <a href="#contact">Contact</a>
+    <nav class="nav-tabs">
+        <button class="tab-btn active" onclick="openTab('about')">Profile</button>
+        <button class="tab-btn" onclick="openTab('skills')">Skills</button>
+        <button class="tab-btn" onclick="openTab('certificates')">Certs</button>
+        <button class="tab-btn" onclick="openTab('projects')">Works</button>
     </nav>
 
-    <section id="about">
-        <h2>About Me</h2>
-        <div class="grid" style="grid-template-columns: 1fr 1fr; align-items: center;">
-            <img src="https://daverezaba123-qghmk.wordpress.com/wp-content/uploads/2026/04/img_20260421_1341155322485705782540295.png?w=815" alt="Anthony Espinosa" style="width: 100%; border-radius: 10px;">
-            <div>
-                <p>I am an aspiring IT Professional driven by how complex systems solve real-world problems. My focus is on bridging the gap between technical efficiency and user experience.</p>
+    <section id="about" class="content-section active">
+        <div class="card">
+            <h2>Personal Profile</h2>
+            <p>Motivated and results-driven Information Technology student with a strong foundational understanding of networking principles, operating systems (Windows/Linux), and hardware configuration.</p>
+            
+            <ul class="info-list">
+                <li><strong>Age:</strong> 25</li>
+                <li><strong>Hobbies:</strong> Watching Movies, Playing Mobile Games, Hiking</li>
+                <li><strong>Location:</strong> Philippines</li>
+            </ul>
+
+            <div style="margin-top:20px;">
+                <a href="https://drive.google.com/file/d/1r3f-_ldsEQhzr6XcYDkHxjjw61izjLN7/view?usp=sharing" class="link-button">📄 Download CV</a>
+                <a href="mailto:daverezaba123@gmail.com" class="link-button">✉️ Email Me</a>
             </div>
+
+            <hr style="margin: 35px 0; border: 0; border-top: 2px dashed #333;">
+            
+            <h3>My Companion: Lemon 🐾</h3>
+            <img src="https://daverezaba123-qghmk.wordpress.com/wp-content/uploads/2025/10/fb_img_16467307966414342928367721801311417410.jpg?w=576" style="width: 150px; border-color: var(--accent-red);" alt="Cat Lemon">
+            <p style="font-style: italic; color: var(--text-muted);">Lemon is my constant companion while coding and debugging!</p>
         </div>
     </section>
 
-    <section id="skills">
-        <h2>Skills & Projects</h2>
-        <div class="grid">
-            <div class="card">
-                <img src="https://daverezaba123-qghmk.wordpress.com/wp-content/uploads/2026/04/received_267360033126596614052547090387034825.jpeg?w=632" alt="Layout">
-                <div class="card-content">
-                    <h3>Design & Layout</h3>
-                    <p>T-shirt sublimation layout and high-quality image editing.</p>
+    <section id="skills" class="content-section">
+        <div class="card">
+            <h2>Technical Skills</h2>
+            <div class="grid">
+                <div>
+                    <h3>Multimedia</h3>
+                    <p>Proficient in Adobe Photoshop for product design and layouts.</p>
+                    <img src="https://daverezaba123-qghmk.wordpress.com/wp-content/uploads/2025/10/img_20250910_1442366977657314798524633.jpg?w=771" alt="Multimedia Project">
+                </div>
+                <div>
+                    <h3>Web Dev</h3>
+                    <p>Hands-on experience with PHP and MySQL database management.</p>
+                    <img src="https://daverezaba123-qghmk.wordpress.com/wp-content/uploads/2025/10/img_20251014_1134147351683056492932065.jpg?w=1024" alt="PHP Practice">
                 </div>
             </div>
-            <div class="card">
-                <img src="https://daverezaba123-qghmk.wordpress.com/wp-content/uploads/2026/04/received_14720831838393725292710248625092296.jpeg?w=683" alt="Dev">
-                <div class="card-content">
-                    <h3>Game Simulation</h3>
-                    <p>Physics-based game development and simulation hosted on GitHub.</p>
+        </div>
+    </section>
+
+    <section id="certificates" class="content-section">
+        <div class="card">
+            <h2>Certifications</h2>
+            <img src="https://daverezaba123-qghmk.wordpress.com/wp-content/uploads/2026/04/messenger_creation_b6abe9f4-d497-465a-8bca-718abc1be0e85320346413832331087.jpeg?w=1024" alt="Cisco Certificate">
+            <p style="margin-top:15px;"><strong>Cisco Networking Academy:</strong> Digital Safety and Security Awareness.</p>
+        </div>
+    </section>
+
+    <section id="projects" class="content-section">
+        <div class="card">
+            <h2>Project Links</h2>
+            <div class="grid">
+                <a href="https://www.canva.com/design/DAGvdbovqI4/u73NBZSDJmGhv8i1Y7YoFw/edit" class="link-button" target="_blank">Canva Portfolio</a>
+                <a href="https://www.figma.com/proto/eAmQpeF1KxF3NUIVF04yJP/Untitled" class="link-button" target="_blank">Figma Prototype</a>
+                <a href="https://www.figma.com/design/pBy0n4gk14CFfs5cXbxADL/Untitled" class="link-button" target="_blank">E-Commerce UI</a>
+            </div>
+            
+            <h3 style="margin-top: 40px;">Tutorial References</h3>
+            <div class="grid">
+                <div class="video-wrapper">
+                    <iframe src="https://www.youtube.com/embed/UB1O30fR-EE" title="HTML Crash Course"></iframe>
+                </div>
+                <div class="video-wrapper">
+                    <iframe src="https://www.youtube.com/embed/pQN-pnXPaVg" title="HTML 1 Hour"></iframe>
                 </div>
             </div>
-            <div class="card">
-                <img src="https://daverezaba123-qghmk.wordpress.com/wp-content/uploads/2026/04/received_16477739230848778504253922941591082.jpeg?w=768" alt="3D">
-                <div class="card-content">
-                    <h3>3D Modeling</h3>
-                    <p>Hoopshot Vendo Machine: From 3D conceptual modeling to actual output.</p>
-                </div>
-            </div>
         </div>
     </section>
+</div>
 
-    <section id="certificates">
-        <h2>Certificates</h2>
-        <div class="card" style="max-width: 600px; margin: 0 auto;">
-            <img src="https://daverezaba123-qghmk.wordpress.com/wp-content/uploads/2026/04/received_9445525915134996693128524351569481.jpeg?w=716" alt="Cyber Security">
-            <div class="card-content">
-                <h3>Cyber Security Completion</h3>
-                <p>Verified course completion in fundamental Cyber Security practices.</p>
-            </div>
-        </div>
-    </section>
+<div class="feedback-toggle" onclick="toggleFeedback()">📝</div>
 
-    <section id="contact">
-        <h2>Contact</h2>
-        <div class="contact-info">
-            <p>Ready to collaborate or hire?</p>
-            <p style="margin-top:20px;">Email: anthony.espinosa@example.com</p>
-            <div style="margin-top: 20px; font-size: 2rem; display: flex; justify-content: center; gap: 30px;">
-                <i class="fab fa-github"></i>
-                <i class="fab fa-linkedin"></i>
-                <i class="fas fa-envelope"></i>
-            </div>
-        </div>
-    </section>
-
-    <div id="chat-trigger" onclick="toggleChat()"><i class="fas fa-comments"></i></div>
-    <div id="chat-widget">
-        <div id="chat-header">
-            <span>Anthony's Assistant</span>
-            <span onclick="toggleChat()" style="cursor:pointer">×</span>
-        </div>
-        <div id="chat-messages">
-            <div class="msg bot">Hi! I'm Anthony's AI. Ask me about his skills, certificates, or projects!</div>
-        </div>
-        <div id="chat-input-area">
-            <input type="text" id="chat-input" placeholder="Type a message..." onkeypress="handleChat(event)">
-        </div>
+<div id="feedback-modal">
+    <div class="feedback-card">
+        <span class="close-feedback" onclick="toggleFeedback()">×</span>
+        <h2>Feedback</h2>
+        <p style="margin-bottom: 15px; color: #999;">How can I improve my website?</p>
+        
+        <form action="https://formspree.io/f/daverezaba123@gmail.com" method="POST">
+            <input type="text" name="name" class="feedback-input" placeholder="Your Name" required>
+            <input type="email" name="_replyto" class="feedback-input" placeholder="Your Email" required>
+            <textarea name="message" class="feedback-input" placeholder="Your Feedback..." rows="4" required></textarea>
+            <button type="submit" class="feedback-submit">Send Feedback</button>
+        </form>
     </div>
+</div>
 
-    <script>
-        // --- DOWNLOAD CV LOGIC ---
-        function downloadCV() {
-            // This creates a fake text file for demonstration. 
-            // In reality, you would link to your PDF file.
-            const cvContent = "Anthony Espinosa CV\nIT Professional\nSkills: Web Dev, 3D Modeling, Cyber Security.";
-            const blob = new Blob([cvContent], { type: 'text/plain' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'Anthony_Espinosa_CV.txt';
-            a.click();
+<div class="ai-toggle" onclick="toggleAI()">☁️</div>
+
+<div id="ai-widget">
+    <div id="ai-header">
+        <span>Portfolio Assistant</span>
+        <span onclick="toggleAI()" style="cursor:pointer">×</span>
+    </div>
+    <div id="ai-body">
+        <p>Hello! I'm Dave's virtual assistant. Ask me about his projects, skills, or even his cat Lemon!</p>
+    </div>
+    <div id="ai-input-area">
+        <input type="text" id="ai-input" placeholder="Type a message...">
+        <button id="ai-send" onclick="askAI()">Send</button>
+    </div>
+</div>
+
+<script>
+    function openTab(tabId) {
+        document.querySelectorAll('.content-section').forEach(section => section.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+
+    function toggleAI() {
+        const widget = document.getElementById('ai-widget');
+        widget.style.display = (widget.style.display === 'flex') ? 'none' : 'flex';
+    }
+
+    /* --- NEW FEEDBACK SCRIPT --- */
+    function toggleFeedback() {
+        const modal = document.getElementById('feedback-modal');
+        modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
+    }
+
+    function askAI() {
+        const input = document.getElementById('ai-input');
+        const body = document.getElementById('ai-body');
+        const q = input.value.toLowerCase();
+        
+        let response = "I'm not sure about that, but you can email Dave at daverezaba123@gmail.com!";
+
+        if (q.includes("name")) {
+            response = "The owner of this portfolio is Dave Rezaba.";
+        } else if (q.includes("age") || q.includes("old")) {
+            response = "Dave is currently 25 years old.";
+        } else if (q.includes("cat") || q.includes("lemon")) {
+            response = "Lemon is Dave's cute cat who helps him debug code!";
+        } else if (q.includes("contact") || q.includes("facebook") || q.includes("number")) {
+            response = "Reach Dave at:<br>• <b>Gmail:</b> daverezaba123@gmail.com<br>• <b>Facebook:</b> Dave Rezaba<br>• <b>Phone:</b> 09944145589";
+        } else if (q.includes("hobby") || q.includes("hobbies")) {
+            response = "Dave loves hiking, watching movies, and gaming.";
+        } else if (q.includes("skill") || q.includes("tech")) {
+            response = "Dave is skilled in PHP, MySQL, Networking, and Adobe Photoshop.";
         }
 
-        // --- CHATBOT LOGIC ---
-        function toggleChat() {
-            const chat = document.getElementById('chat-widget');
-            chat.style.display = (chat.style.display === 'flex') ? 'none' : 'flex';
-        }
+        body.innerHTML += `<div style="margin-top:10px; text-align:right;"><span style="background:var(--accent-red); color:white; padding:8px 12px; border-radius:12px; display:inline-block; border:1px solid var(--accent-red);">${input.value}</span></div>`;
+        body.innerHTML += `<div style="margin-top:10px;"><span style="background:#222; color:white; padding:8px 12px; border-radius:12px; display:inline-block; border:1px solid #333;">${response}</span></div>`;
+        body.scrollTop = body.scrollHeight;
+        input.value = "";
+    }
 
-        function handleChat(e) {
-            if (e.key === 'Enter') {
-                const input = document.getElementById('chat-input');
-                const msg = input.value.toLowerCase();
-                if (!msg) return;
+    document.getElementById("ai-input").addEventListener("keyup", function(e) {
+        if (e.key === "Enter") askAI();
+    });
+</script>
 
-                appendMessage(input.value, 'user');
-                input.value = '';
-
-                setTimeout(() => {
-                    let response = "I'm not sure about that. Try asking about 'skills', 'hoopshot', or 'certificates'!";
-                    
-                    if (msg.includes('skill') || msg.includes('do')) {
-                        response = "Anthony is skilled in T-shirt layout, image editing, and Game Simulation in GitHub.";
-                    } else if (msg.includes('certif') || msg.includes('cyber')) {
-                        response = "Anthony holds a certificate in Cyber Security completion.";
-                    } else if (msg.includes('hoopshot') || msg.includes('3d')) {
-                        response = "He designed and built a 'Hoopshot Vendo Machine' using 3D modeling and physical construction.";
-                    } else if (msg.includes('who') || msg.includes('about')) {
-                        response = "Anthony is an IT professional focused on technical efficiency and user experience.";
-                    }
-                    
-                    appendMessage(response, 'bot');
-                }, 600);
-            }
-        }
-
-        function appendMessage(text, sender) {
-            const container = document.getElementById('chat-messages');
-            const div = document.createElement('div');
-            div.className = `msg ${sender}`;
-            div.innerText = text;
-            container.appendChild(div);
-            container.scrollTop = container.scrollHeight;
-        }
-    </script>
 </body>
 </html>
